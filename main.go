@@ -1,21 +1,32 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error. Unable to load .env file: ", err)
+	}
+	PORT := os.Getenv("PORT")
+
 	r := gin.New()
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Hello World!",
 		})
 	})
-	fmt.Println("Server is running on port 8080")
-	fmt.Println("Connect using http://localhost:8080 or http://0.0.0.0:8080")
+	log.Printf("Server is running on port %v\n", PORT)
+	log.Printf("Connect using http://localhost:%v or http://0.0.0.0:%v\n", PORT, PORT)
 
-	r.Run()
+	err = r.Run(":" + PORT)
+	if err != nil {
+		log.Fatal("Error. Unable to start server: ", err)
+	}
 }
