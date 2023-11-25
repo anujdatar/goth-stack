@@ -1,0 +1,12 @@
+version: '3.1'
+
+services:
+
+  sqld:
+    image: ghcr.io/libsql/sqld:latest
+    container_name: libsql
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    volumes:
+      - .local_db:/var/lib/sqld
