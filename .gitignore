@@ -24,3 +24,5 @@ go.work
 .local_db
 temp
 tmp
+temp.*
+tmp.*
