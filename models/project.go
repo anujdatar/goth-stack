@@ -1,14 +1,23 @@
 package models
 
+import "time"
+
 type Project struct {
-	ID          int    `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	TeamID      int    `json:"team_id"`
-	Team        Team   `json:"team"`
-	Users       []User `json:"users"`
-	Admins      []User `json:"admins"`
-	Deleted     bool   `json:"deleted"`
-	CreatedAt   string `json:"created_at"`
-	UpdatedAt   string `json:"updated_at"`
+	ProjectID   int       `json:"project_id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	TeamID      int       `json:"team_id"`
+	Deleted     int       `json:"deleted"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+type ProjectUser struct {
+	ProjectID int `json:"project_id"`
+	UserID    int `json:"user_id"`
+}
+
+type ProjectAdmin struct {
+	ProjectID int `json:"project_id"`
+	UserID    int `json:"user_id"`
 }

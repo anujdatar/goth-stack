@@ -1,16 +1,34 @@
 package models
 
+import "time"
+
 type Team struct {
-	ID            int            `json:"id"`
-	Name          string         `json:"name"`
-	Description   string         `json:"description"`
-	OwnerID       int            `json:"owner_id"`
-	Owner         User           `json:"owner"`
-	Subscriptions []Subscription `json:"subscriptions"`
-	Users         []User         `json:"users"`
-	Admins        []User         `json:"admins"`
-	Projects      []Project      `json:"projects"`
-	Deleted       bool           `json:"deleted"`
-	CreatedAt     string         `json:"created_at"`
-	UpdatedAt     string         `json:"updated_at"`
+	TeamID         int       `json:"team_id"`
+	Name           string    `json:"name"`
+	Description    string    `json:"description"`
+	OwnerID        int       `json:"owner_id"`
+	SubscriptionID int       `json:"subscription_id"`
+	Deleted        int       `json:"deleted"`
+	CreatedAt      time.Time `json:"created_at"`
+	UpdatedAt      time.Time `json:"updated_at"`
+}
+
+type TeamUser struct {
+	TeamID int `json:"team_id"`
+	UserID int `json:"user_id"`
+}
+
+type TeamAdmin struct {
+	TeamID int `json:"team_id"`
+	UserID int `json:"user_id"`
+}
+
+type TeamProject struct {
+	TeamID    int `json:"team_id"`
+	ProjectID int `json:"project_id"`
+}
+
+type TeamSubscription struct {
+	TeamID         int `json:"team_id"`
+	SubscriptionID int `json:"subscription_id"`
 }

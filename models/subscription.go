@@ -1,10 +1,12 @@
 package models
 
+import "time"
+
 type Subscription struct {
-	ID        int    `json:"id"`
-	Name      string `json:"name"`
-	Price     int    `json:"price"`
-	Deleted   bool   `json:"deleted"`
-	CreatedAt string `json:"created_at"`
-	UpdatedAt string `json:"updated_at"`
+	SubscriptionID int       `json:"subscription_id"`
+	Name           string    `json:"name"`
+	Price          int       `json:"price"`
+	Deleted        int       `json:"deleted"`
+	CreatedAt      time.Time `json:"created_at"`
+	UpdatedAt      time.Time `json:"updated_at"`
 }
