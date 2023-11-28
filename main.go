@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	dbController "github.com/anujdatar/goth-stack/controllers/db"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -15,6 +16,10 @@ func main() {
 		log.Fatal("Error. Unable to load .env file: ", err)
 	}
 	PORT := os.Getenv("PORT")
+
+	db := dbController.ConnectToDb()
+	defer db.Close()
+	dbController.CreateDbTables(db)
 
 	r := gin.New()
 	r.GET("/", func(c *gin.Context) {
