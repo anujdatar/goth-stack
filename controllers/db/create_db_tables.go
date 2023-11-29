@@ -30,35 +30,6 @@ func CreateDbTables(db *sql.DB) {
 		log.Fatal("Error. Unable to create user table: ", err)
 	}
 
-	// Create teams table
-	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS teams (
-		team_id INTEGER PRIMARY KEY,
-		name TEXT NOT NULL,
-		description TEXT,
-		owner_id INTEGER NOT NULL,
-		subscription_id INTEGER NOT NULL,
-		deleted INTEGER NOT NULL DEFAULT 0,
-		created_at INTEGER DEFAULT (strftime('%s', 'now')),
-		updated_at INTEGER DEFAULT (strftime('%s', 'now'))
-	)`)
-	if err != nil {
-		log.Fatal("Error. Unable to create teams table: ", err)
-	}
-
-	// Create projects table
-	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS projects (
-		project_id INTEGER PRIMARY KEY,
-		name TEXT NOT NULL,
-		description TEXT,
-		team_id INTEGER NOT NULL,
-		deleted INTEGER NOT NULL DEFAULT 0,
-		created_at INTEGER DEFAULT (strftime('%s', 'now')),
-		updated_at INTEGER DEFAULT (strftime('%s', 'now'))
-	)`)
-	if err != nil {
-		log.Fatal("Error. Unable to create projects table: ", err)
-	}
-
 	// Create subscriptions table
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS subscriptions (
 		subscription_id INTEGER PRIMARY KEY,
@@ -70,6 +41,40 @@ func CreateDbTables(db *sql.DB) {
 	)`)
 	if err != nil {
 		log.Fatal("Error. Unable to create subscriptions table: ", err)
+	}
+
+	// Create teams table
+	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS teams (
+		team_id INTEGER PRIMARY KEY,
+		name TEXT NOT NULL,
+		description TEXT,
+		owner_id INTEGER NOT NULL,
+		subscription_id INTEGER NOT NULL,
+		deleted INTEGER NOT NULL DEFAULT 0,
+		created_at INTEGER DEFAULT (strftime('%s', 'now')),
+		updated_at INTEGER DEFAULT (strftime('%s', 'now')),
+		FOREIGN KEY (owner_id) REFERENCES users (user_id),
+		FOREIGN KEY (subscription_id) REFERENCES subscriptions (subscription_id)
+	)`)
+	if err != nil {
+		log.Fatal("Error. Unable to create teams table: ", err)
+	}
+
+	// Create projects table
+	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS projects (
+		project_id INTEGER PRIMARY KEY,
+		name TEXT NOT NULL,
+		description TEXT,
+		team_id INTEGER NOT NULL,
+		owner_id INTEGER NOT NULL,
+		deleted INTEGER NOT NULL DEFAULT 0,
+		created_at INTEGER DEFAULT (strftime('%s', 'now')),
+		updated_at INTEGER DEFAULT (strftime('%s', 'now')),
+		FOREIGN KEY (team_id) REFERENCES teams (team_id),
+		FOREIGN KEY (owner_id) REFERENCES users (user_id)
+	)`)
+	if err != nil {
+		log.Fatal("Error. Unable to create projects table: ", err)
 	}
 
 	// Create team_users table
@@ -109,16 +114,16 @@ func CreateDbTables(db *sql.DB) {
 	}
 
 	// Create team_subscriptions table
-	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS team_subscriptions (
-		team_id INTEGER NOT NULL,
-		subscription_id INTEGER NOT NULL,
-		PRIMARY KEY (team_id, subscription_id)
-		FOREIGN KEY (team_id) REFERENCES teams (team_id)
-		FOREIGN KEY (subscription_id) REFERENCES subscriptions (subscription_id)
-	)`)
-	if err != nil {
-		log.Fatal("Error. Unable to create team_subscriptions table: ", err)
-	}
+	// _, err = db.Exec(`CREATE TABLE IF NOT EXISTS team_subscriptions (
+	// 	team_id INTEGER NOT NULL,
+	// 	subscription_id INTEGER NOT NULL,
+	// 	PRIMARY KEY (team_id, subscription_id)
+	// 	FOREIGN KEY (team_id) REFERENCES teams (team_id)
+	// 	FOREIGN KEY (subscription_id) REFERENCES subscriptions (subscription_id)
+	// )`)
+	// if err != nil {
+	// 	log.Fatal("Error. Unable to create team_subscriptions table: ", err)
+	// }
 
 	// Create project_users table
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS project_users (

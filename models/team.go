@@ -28,7 +28,7 @@ type TeamProject struct {
 	ProjectID int `json:"project_id"`
 }
 
-type TeamSubscription struct {
-	TeamID         int `json:"team_id"`
-	SubscriptionID int `json:"subscription_id"`
-}
+// type TeamSubscription struct {
+// 	TeamID         int `json:"team_id"`
+// 	SubscriptionID int `json:"subscription_id"`
+// }
