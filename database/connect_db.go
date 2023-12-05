@@ -29,10 +29,6 @@ func Connect() {
 	if err != nil {
 		log.Fatal("Error. Unable to connect to database: ", err)
 	}
-	// pingErr := Database.Ping()
-	// if pingErr != nil {
-	// 	log.Fatal("Error. Unable to ping database: ", pingErr)
-	// }
 	log.Println("Connected to database at: ", DB_URL)
 	Database = db
 }
