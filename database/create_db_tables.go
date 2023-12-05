@@ -113,18 +113,6 @@ func CreateDbTables(db *sql.DB) {
 		log.Fatal("Error. Unable to create team_projects table: ", err)
 	}
 
-	// Create team_subscriptions table
-	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS team_subscriptions (
-	team_id INTEGER NOT NULL,
-	subscription_id INTEGER NOT NULL,
-	PRIMARY KEY (team_id, subscription_id)
-	FOREIGN KEY (team_id) REFERENCES teams (team_id)
-	FOREIGN KEY (subscription_id) REFERENCES subscriptions (subscription_id)
-)`)
-	if err != nil {
-		log.Fatal("Error. Unable to create team_subscriptions table: ", err)
-	}
-
 	// Create project_users table
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS project_users (
 		project_id INTEGER NOT NULL,
