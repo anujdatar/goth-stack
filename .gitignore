@@ -26,3 +26,4 @@ temp
 tmp
 temp.*
 tmp.*
+.env.prod
