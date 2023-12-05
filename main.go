@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	dbController "github.com/anujdatar/goth-stack/controllers/db"
+	"github.com/anujdatar/goth-stack/database"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -17,9 +17,9 @@ func main() {
 	}
 	PORT := os.Getenv("PORT")
 
-	db := dbController.ConnectToDb()
-	defer db.Close()
-	dbController.CreateDbTables(db)
+	database.Connect()
+	defer database.Database.Close()
+	database.CreateDbTables(database.Database)
 
 	r := gin.New()
 	r.GET("/", func(c *gin.Context) {
